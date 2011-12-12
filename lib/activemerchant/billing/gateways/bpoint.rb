@@ -10,7 +10,7 @@ module ActiveMerchant
       self.default_currency    = 'AUD'
 
       def initialize(options = {})
-        #requires!(options, :login, :password)
+        requires!(options, :login, :password, :merchant_number)
         @options = options
         super
       end
@@ -57,12 +57,25 @@ module ActiveMerchant
       end
 
       def commit(action, money, parameters)
+        parameters[:Amount] = amount(money)
+
+        response = parse(ssl_post(LIVE_URL, post_data(parameters)) )
       end
 
       def message_from(response)
       end
 
       def post_data(action, parameters = {})
+        xml   = REXML::Document.new
+        root  = xml.add_element('txnReq')
+
+        parameters.each { |key, value| root.add_element(key).text = value }
+
+        xml.add_element('username', @options[:login])
+        xml.add_element('password', @options[:password])
+        xml.add_element('merchantNumber', @options[:merchant_number])
+
+        xml.to_s
       end
     end
   end
