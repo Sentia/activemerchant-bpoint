@@ -1,13 +1,19 @@
 require 'spec_helper'
 
 describe ActiveMerchant::Billing::BpointGateway do
-  context 'using invalid details' do
-    it 'is not successful' do
+ let(:options)           { { :order_id => '1', :billing_address => address, :description => 'Store Purchase' } }
+ let(:valid_credit_card) { credit_card('todo: get card number') }
 
+  context 'using invalid details' do
+    let(:gateway)  { ActiveMerchant::Billing::BpointGateway.new(:login => '', :password => '') }
+    let(:response) { gateway.purchase(100, credit_card, {}) }
+
+    it 'is not successful' do
+      response.should_not be_successful
     end
 
     it 'returns an invalid login status' do
-
+      response.message.should include 'Unknown Customer Username or Password'
     end
   end
 end
