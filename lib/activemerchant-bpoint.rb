@@ -1,6 +1,7 @@
-require "activemerchant-bpoint/version"
+require 'activemerchant/bpoint/version'
+require 'activemerchant/bpoint/test'
 
-module Activemerchant
+module ActiveMerchant
   module Bpoint
     # Your code goes here...
   end
