@@ -55,17 +55,17 @@ module ActiveMerchant
       end
 
       def parse(body)
+        REXML::Document.new(body)
       end
 
       def commit(action, money, parameters)
         parameters[:Amount] = amount(money)
 
         response = parse(ssl_post(LIVE_URL, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8') )
+        success  = response.elements['//ResponseCode'].try(:text) == 'SUCCESS'
+        message  = response.elements['//ResponseMessage'].text
 
-        raise response.inspect
-      end
-
-      def message_from(response)
+        result = Response.new(success, message)
       end
 
       def post_data(action, parameters = {})

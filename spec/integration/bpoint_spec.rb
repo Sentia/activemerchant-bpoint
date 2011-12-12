@@ -9,11 +9,11 @@ describe ActiveMerchant::Billing::BpointGateway do
     let(:response) { gateway.purchase(100, credit_card, {}) }
 
     it 'is not successful' do
-      response.should_not be_successful
+      response.should_not be_success
     end
 
     it 'returns an invalid login status' do
-      response.message.should include 'Unknown Customer Username or Password'
+      response.message.should include 'invalid login'
     end
   end
 end
