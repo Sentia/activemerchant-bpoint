@@ -80,16 +80,16 @@ module ActiveMerchant
 
         body    = envelope.add_element('env:Body')
         request = body.add_element("ns0:#{action}")
+        tnx_request = request.add_element('ns0:txnReq')
 
-        xml << REXML::XMLDecl.new('1.0', 'UTF-8')
 
         request.add_element('ns0:username').text       = @options[:login]
         request.add_element('ns0:password').text       = @options[:password]
         request.add_element('ns0:merchantNumber').text = @options[:merchant_number]
 
-        tnx_request = request.add_element('ns0:txnReq')
         parameters.each { |key, value| tnx_request.add_element("ns0:#{key}").text = value }
 
+        xml << REXML::XMLDecl.new('1.0', 'UTF-8')
         xml.to_s
       end
     end
