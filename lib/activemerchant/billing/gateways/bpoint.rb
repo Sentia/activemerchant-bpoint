@@ -8,6 +8,7 @@ module ActiveMerchant
       self.homepage_url        = 'http://www.bpoint.com.au'
       self.display_name        = 'BPOINT'
       self.default_currency    = 'AUD'
+      self.money_format        = :cents
 
       def initialize(options = {})
         requires!(options, :login, :password, :merchant_number)
@@ -32,7 +33,7 @@ module ActiveMerchant
         add_address(post, creditcard, options)
         add_customer_data(post, options)
 
-        commit('sale', money, post)
+        commit('ProcessPayment', money, post)
       end
 
       def capture(money, authorization, options = {})
@@ -59,21 +60,35 @@ module ActiveMerchant
       def commit(action, money, parameters)
         parameters[:Amount] = amount(money)
 
-        response = parse(ssl_post(LIVE_URL, post_data(parameters)) )
+        response = parse(ssl_post(LIVE_URL, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8') )
+
+        raise response.inspect
       end
 
       def message_from(response)
       end
 
       def post_data(action, parameters = {})
-        xml   = REXML::Document.new
-        root  = xml.add_element('txnReq')
+        xml      = REXML::Document.new
+        envelope = xml.add_element('env:Envelope',  { 'xmlns:xsd' =>
+                                  'http://www.w3.org/2001/XMLSchema',
+                                    'xmlns:xsi' =>
+                                  'http://www.w3.org/2001/XMLSchema-instance',
+                                    'xmlns:wsdl' => 'urn:Eve', 'xmlns:env' =>
+                                  'http://schemas.xmlsoap.org/soap/envelope/',
+                                    'xmlns:ns0' => 'urn:Eve'})
 
-        parameters.each { |key, value| root.add_element(key).text = value }
+        body    = envelope.add_element('env:Body')
+        request = body.add_element("ns0:#{action}")
 
-        xml.add_element('username', @options[:login])
-        xml.add_element('password', @options[:password])
-        xml.add_element('merchantNumber', @options[:merchant_number])
+        xml << REXML::XMLDecl.new('1.0', 'UTF-8')
+
+        request.add_element('ns0:username').text       = @options[:login]
+        request.add_element('ns0:password').text       = @options[:password]
+        request.add_element('ns0:merchantNumber').text = @options[:merchant_number]
+
+        tnx_request = request.add_element('ns0:txnReq')
+        parameters.each { |key, value| tnx_request.add_element("ns0:#{key}").text = value }
 
         xml.to_s
       end

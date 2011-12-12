@@ -5,7 +5,7 @@ describe ActiveMerchant::Billing::BpointGateway do
  let(:valid_credit_card) { credit_card('todo: get card number') }
 
   context 'using invalid details' do
-    let(:gateway)  { ActiveMerchant::Billing::BpointGateway.new(:login => '', :password => '') }
+    let(:gateway)  { ActiveMerchant::Billing::BpointGateway.new(:login => 'does', :password => 'not_exist', :merchant_number => '8') }
     let(:response) { gateway.purchase(100, credit_card, {}) }
 
     it 'is not successful' do
