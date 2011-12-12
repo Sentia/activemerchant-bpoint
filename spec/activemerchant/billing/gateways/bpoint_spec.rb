@@ -15,59 +15,6 @@ describe ActiveMerchant::Billing::BpointGateway do
     end
   end
 
-  describe '#authorize' do
-    it 'successfully authorizes a valid mastercard credit card' do
-      pending
-    end
-
-    it 'successfully authorizes a valid visa credit card' do
-      pending
-    end
-
-    it 'does not authorize an invalid mastercard credit card' do
-      pending
-    end
-
-    it 'does not authorize an invalid visa credit card' do
-      pending
-    end
-  end
-
-  describe '#capture' do
-    it 'successfully captures a valid mastercard credit card' do
-      pending
-    end
-
-    it 'successfully captures a valid visa credit card' do
-      pending
-    end
-
-    it 'does not capture an invalid mastercard credit card' do
-      pending
-    end
-
-    it 'does not capture an invalid visa credit card' do
-      pending
-    end
-  end
-
-  describe '#credit' do
-    it 'successfully credits a valid mastercard credit card' do
-      pending
-    end
-
-    it 'successfully credits a valid visa credit card' do
-      pending
-    end
-
-    it 'does not credit an invalid mastercard credit card' do
-      pending
-    end
-
-    it 'does not credit an invalid visa credit card' do
-      pending
-    end
-  end
 
   describe '#purchase' do
     it 'successfully performs a purchase on a valid mastercard credit card' do
@@ -116,22 +63,6 @@ describe ActiveMerchant::Billing::BpointGateway do
       it 'returns an error response' do
         pending
       end
-    end
-
-    it 'successfully removes a credit card stores a valid mastercard credit card' do
-      pending
-    end
-
-    it 'successfully stores a valid visa credit card' do
-      pending
-    end
-
-    it 'does not store an invalid mastercard credit card' do
-      pending
-    end
-
-    it 'does not store an invalid visa credit card' do
-      pending
     end
   end
 end
