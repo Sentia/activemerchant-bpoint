@@ -1,20 +1,13 @@
 module ActiveMerchant
   module Billing
     class BpointGateway < Gateway
-      TEST_URL = 'https://example.com/test'
-      LIVE_URL = 'https://example.com/live'
+      LIVE_URL = 'https://www.bpoint.com.au/evolve/service.asmx'
 
-      # The countries the gateway supports merchants from as 2 digit ISO country codes
-      self.supported_countries = ['AU']
-
-      # The card types supported by the payment gateway
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
-
-      # The homepage URL of the gateway
-      self.homepage_url = 'http://www.example.net/'
-
-      # The name of the gateway
-      self.display_name = 'BPOINT'
+      self.supported_countries = ['AU']
+      self.homepage_url        = 'http://www.bpoint.com.au'
+      self.display_name        = 'BPOINT'
+      self.default_currency    = 'AUD'
 
       def initialize(options = {})
         #requires!(options, :login, :password)
