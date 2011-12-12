@@ -30,12 +30,20 @@ describe ActiveMerchant::Billing::BpointGateway do
   end
 
   describe '#purchase' do
-    it 'successfully performs a purchase on a valid credit card' do
-      pending
+    let(:gateway)             { ActiveMerchant::Billing::BpointGateway.new(:login => GATEWAY_LOGIN, :password => GATEWAY_PASSWORD, :merchant_number => GATEWAY_MERCHANT_NUMBER) }
+    let(:valid_credit_card)   { credit_card(:year => 2000) }
+    let(:invalid_credit_card) { credit_card(:year => 2010) }
+
+    context 'on a valid credit card' do
+      let(:response) { gateway.purchase(1000, valid_credit_card) }
+
+      it { should be_success }
     end
 
-    it 'does not performs a purchase on an invalid credit card' do
-      pending
+    context 'on an invalid credit card' do
+      let(:response) { gateway.purchase(1000, invalid_credit_card) }
+
+      it { should_not be_success }
     end
   end
 
