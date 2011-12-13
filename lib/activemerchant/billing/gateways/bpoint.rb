@@ -19,14 +19,14 @@ module ActiveMerchant
       def purchase(money, creditcard, options = {})
         post = {}
         add_invoice(post, options)
-        add_creditcard(post, creditcard)
+        add_creditcard(post, creditcard, options)
 
         commit('ProcessPayment', money, post)
       end
 
       def store(credit_card, options = {})
         post = {}
-        add_creditcard(post, credit_card)
+        add_creditcard(post, credit_card, options)
 
         commit('AddToken', nil, post)
       end
@@ -47,10 +47,10 @@ module ActiveMerchant
         post[:MerchantReference] = options[:order_id]
       end
 
-      def add_creditcard(post, creditcard)
+      def add_creditcard(post, creditcard, options = {})
         if test?
           creditcard.month = '99'
-          creditcard.year  = '2000' if @options[:force_success] == true
+          creditcard.year  = '2000' if options[:force_success] == true
         end
 
         post[:CardNumber] = creditcard.number
