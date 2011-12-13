@@ -24,10 +24,6 @@ module ActiveMerchant
         commit('ProcessPayment', money, post)
       end
 
-      def capture(money, authorization, options = {})
-        commit('capture', money, post)
-      end
-
       def test?
         @options[:test] || super
       end
