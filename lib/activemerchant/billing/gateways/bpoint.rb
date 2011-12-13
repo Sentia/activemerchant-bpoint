@@ -31,6 +31,12 @@ module ActiveMerchant
         commit('AddToken', nil, post)
       end
 
+      def unstore(token, options = {})
+        post = { :token => token }
+
+        commit('DeleteToken', nil, post)
+      end
+
       def test?
         @options[:test] || super
       end
@@ -96,11 +102,9 @@ module ActiveMerchant
         body    = envelope.add_element('env:Body')
         request = body.add_element("ns0:#{action}")
 
-        if action == 'AddToken'
-          tnx_request = request.add_element('ns0:tokenRequest')
-        else
-          tnx_request = request.add_element('ns0:txnReq')
-        end
+        tnx_request = request.add_element('ns0:tokenRequest') if action == 'AddToken'
+        tnx_request = request.add_element('ns0:txnReq') if action == 'ProcessPayment'
+        tnx_request = request if tnx_request.blank?
 
         request.add_element('ns0:username').text       = @options[:login]
         request.add_element('ns0:password').text       = @options[:password]
