@@ -2,6 +2,7 @@ require 'rubygems'
 require 'activemerchant-bpoint'
 require 'support/gateway_helpers'
 require 'vcr'
+require 'test_credentials'
 
 RSpec.configure do |config|
   config.include GatewayHelpers
