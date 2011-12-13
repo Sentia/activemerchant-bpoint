@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe ActiveMerchant::Billing::BpointGateway do
- let(:options)           { { :order_id => '1', :billing_address => address, :description => 'Store Purchase' } }
- let(:valid_credit_card) { credit_card('todo: get card number') }
+  let(:options)             { { :order_id => '1', :billing_address => address, :description => 'Store Purchase' } }
+  let(:success_credit_card) { credit_card('5123456789012346', :year => 2100) }
+  let(:fail_credit_card)    { credit_card('5123456789012346', :year => 2010) }
+  let(:invalid_credit_card) { credit_card('', :year => 2010) }
 
   context 'using invalid details' do
     let(:my_gateway) { gateway(:login => 'does', :password => 'not_exist', :merchant_number => '8') }
@@ -18,11 +20,8 @@ describe ActiveMerchant::Billing::BpointGateway do
   end
 
   context 'making a purchase' do
-    let(:valid_credit_card)   { credit_card('5123456789012346', :year => 2100) }
-    let(:invalid_credit_card) { credit_card('5123456789012346', :year => 2010) }
-
     context 'on a valid credit card' do
-      subject { VCR.use_cassette('valid CC purchase') { gateway.purchase(1000, valid_credit_card) } }
+      subject { VCR.use_cassette('valid CC purchase') { gateway.purchase(1000, success_credit_card) } }
 
       it { should be_success }
 
@@ -32,19 +31,27 @@ describe ActiveMerchant::Billing::BpointGateway do
     end
 
     context 'on an invalid credit card' do
-      subject { VCR.use_cassette('invalid CC purchase') { gateway.purchase(1000, invalid_credit_card) } }
+      subject { VCR.use_cassette('invalid CC purchase') { gateway.purchase(1000, fail_credit_card) } }
 
       it { should_not be_success }
     end
   end
 
   context 'storing a credit card' do
-    it 'successfully stores a valid credit card' do
-      pending
+    context 'for a valid credit card' do
+      subject { VCR.use_cassette('store valid CC') { gateway.store(success_credit_card) } }
+
+      it { should be_success }
+
+      it 'should return a token' do
+        subject.params['token'].should be_present
+      end
     end
 
-    it 'does not store an invalid credit card' do
-      pending
+    context 'for an invalid credit card' do
+      subject { VCR.use_cassette('store invalid CC') { gateway.store(invalid_credit_card) } }
+
+      it { should_not be_success }
     end
   end
 

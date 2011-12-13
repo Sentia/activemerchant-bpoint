@@ -24,6 +24,13 @@ module ActiveMerchant
         commit('ProcessPayment', money, post)
       end
 
+      def store(credit_card, options = {})
+        post = {}
+        add_creditcard(post, credit_card)
+
+        commit('AddToken', nil, post)
+      end
+
       def test?
         @options[:test] || super
       end
@@ -55,7 +62,7 @@ module ActiveMerchant
       end
 
       def commit(action, money, parameters)
-        parameters[:Amount]      = amount(money)
+        parameters[:Amount]      = amount(money) if money.present?
         parameters[:PaymentType] = 'PAYMENT'
         parameters[:TxnType]     = 'INTERNET_ANONYMOUS'
 
@@ -69,7 +76,7 @@ module ActiveMerchant
       end
 
       def success_from(response)
-        response[:response_code] == 'SUCCESS' && response[:acquirer_response_code] == '00'
+        response[:response_code] == 'SUCCESS' && (response[:acquirer_response_code] == nil || response[:acquirer_response_code] == '00')
       end
 
       def message_from(response)
@@ -88,8 +95,12 @@ module ActiveMerchant
 
         body    = envelope.add_element('env:Body')
         request = body.add_element("ns0:#{action}")
-        tnx_request = request.add_element('ns0:txnReq')
 
+        if action == 'AddToken'
+          tnx_request = request.add_element('ns0:tokenRequest')
+        else
+          tnx_request = request.add_element('ns0:txnReq')
+        end
 
         request.add_element('ns0:username').text       = @options[:login]
         request.add_element('ns0:password').text       = @options[:password]
