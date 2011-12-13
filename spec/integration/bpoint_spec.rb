@@ -56,16 +56,18 @@ describe ActiveMerchant::Billing::BpointGateway do
   end
 
   context 'removing a credit card from storage' do
+    let!(:token)  { VCR.use_cassette('store valid CC') { gateway.store(success_credit_card).params['token'] } }
+
     context 'when given a valid token' do
-      it 'removes a card cord from storage' do
-        pending
-      end
+      subject { VCR.use_cassette('unstore valid token') { gateway.unstore(token) } }
+
+      it { should be_success }
     end
 
     context 'when not given a valid token' do
-      it 'returns an error response' do
-        pending
-      end
+      subject { VCR.use_cassette('unstore invalid token') { gateway.unstore('7') } }
+
+      it { should_not be_success }
     end
   end
 end
