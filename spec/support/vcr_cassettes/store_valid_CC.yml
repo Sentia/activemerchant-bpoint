@@ -8,7 +8,7 @@
       content-type:
       - text/xml;charset=UTF-8
       soapaction:
-      - urn:Eve/ProcessPayment
+      - urn:Eve/AddToken
   response: !ruby/struct:VCR::Response
     status: !ruby/struct:VCR::ResponseStatus
       code: 200
@@ -17,7 +17,7 @@
       cache-control:
       - private, max-age=0
       content-length:
-      - '758'
+      - '492'
       content-type:
       - text/xml; charset=utf-8
       x-powered-by:
@@ -27,9 +27,8 @@
       server:
       - Apache2
       date:
-      - Tue, 13 Dec 2011 07:09:20 GMT
+      - Tue, 13 Dec 2011 07:09:23 GMT
     body: <?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ProcessPaymentResponse
-      xmlns="urn:Eve"><ProcessPaymentResult><ResponseCode>1</ResponseCode><AcquirerResponseCode>10</AcquirerResponseCode><AuthorisationResult>Declined</AuthorisationResult><TransactionNumber>68783534</TransactionNumber><ReceiptNumber>19362423534</ReceiptNumber><AuthoriseId
-      /><SettlementDate>20111213</SettlementDate><MaskedCardNumber>512345...346</MaskedCardNumber><CardType>MC</CardType></ProcessPaymentResult><response><ResponseCode>SUCCESS</ResponseCode></response></ProcessPaymentResponse></soap:Body></soap:Envelope>
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><AddTokenResponse
+      xmlns="urn:Eve"><AddTokenResult><Token>5999991331249369</Token><MaskedCardNumber>512345...346</MaskedCardNumber><CardType>MC</CardType></AddTokenResult><response><ResponseCode>SUCCESS</ResponseCode></response></AddTokenResponse></soap:Body></soap:Envelope>
     http_version: '1.1'
