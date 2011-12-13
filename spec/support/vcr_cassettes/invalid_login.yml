@@ -27,7 +27,7 @@
       server:
       - Apache2
       date:
-      - Tue, 13 Dec 2011 03:25:12 GMT
+      - Tue, 13 Dec 2011 05:30:02 GMT
     body: <?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ProcessPaymentResponse
       xmlns="urn:Eve"><ProcessPaymentResult /><response><ResponseCode>ERROR</ResponseCode><ResponseMessage>invalid
