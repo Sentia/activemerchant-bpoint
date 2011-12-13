@@ -59,18 +59,33 @@ module ActiveMerchant
       end
 
       def parse(body)
-        REXML::Document.new(body)
+        return {} if body.blank?
+
+        xml    = REXML::Document.new(body)
+        result = {}.tap { |response| xml.root.elements.to_a.each { |node| parse_element(response, node) } }
+      end
+
+      def parse_element(response, node)
+        return response[node.name.underscore.to_sym] = node.text unless node.has_elements?
+
+        node.elements.each{|element| parse_element(response, element) }
       end
 
       def commit(action, money, parameters)
         parameters[:Amount] = amount(money)
 
-        response = parse(ssl_post(LIVE_URL, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8') )
-        success  = response.elements['//ResponseCode'].try(:text) == '0'
-        message  = response.elements['//ResponseMessage'].try(:text) || response.elements['//AuthorisationResult'].try(:text)
-        options  = { :authorization => response.elements['//AuthoriseId'].try(:text) }
+        response = parse(ssl_post(LIVE_URL, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8'))
+        options  = { :authorization => response[:authorise_id] }
 
-        Response.new(success, message, {}, options)
+        Response.new(success_from(response), message_from(response), response, options)
+      end
+
+      def success_from(response)
+        response[:response_code] == 'SUCCESS' && response[:acquirer_response_code] == '00'
+      end
+
+      def message_from(response)
+        response[:response_message]
       end
 
       def post_data(action, parameters = {})
