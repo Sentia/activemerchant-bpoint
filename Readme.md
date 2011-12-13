@@ -7,7 +7,9 @@ Before installing the gem you should have a BPOINT account ready to use. If not 
 
 To install simply add the following line to your `Gemfile` and then run `bundle install`:
 
-    gem 'activemerchant-bpoint'
+``` ruby
+gem 'activemerchant-bpoint'
+```
 
 The gateway can be initialised by passing your login details like so:
 
@@ -40,6 +42,15 @@ else
   puts response.message # Output the error message
 end
 ```
+
+## Using test mode
+As [noted in the BPOINT developer documenation in regards to testing](https://www.bpoint.com.au/backoffice/Views/Bpoint/Support/HelpGuids/TechExtracts/Testing(Phone,Internet,DDCC).pdf) the gateway can be put into test mode by sending a month value of `99`. The initialiser for the gateway takes an optional test argument which will put it into test mode like so:
+
+``` ruby
+gateway = ActiveMerchant::Billing::BpointGateway.new(:login => 'login', :password => 'pass', :merchant_number => 'num', :test => true)
+```
+
+When the gateway is in test mode then all requests will automatically have the month set to 99 (To trigger test mode on the gateway). The year is then used to determine which response code the gateway returns. The caveat with this is that you cannot have a successful status (year 2000 or 2100) and have a valid `ActiveMerchant::Billing::CreditCard`. To get around this you can pass `:force_success => true` to the gateway to send a year of `00` and have a successful response.
 
 ## License
 

@@ -48,6 +48,11 @@ module ActiveMerchant
       end
 
       def add_creditcard(post, creditcard)
+        if test?
+          creditcard.month = '99'
+          creditcard.year  = '2000' if @options[:force_success] == true
+        end
+
         post[:CardNumber] = creditcard.number
         post[:ExpiryDate] = "%02d%02s" % [creditcard.month, creditcard.year.to_s[-2..-1]]
         post[:CVC]        = creditcard.verification_value
