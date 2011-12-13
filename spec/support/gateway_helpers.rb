@@ -1,19 +1,4 @@
 module GatewayHelpers
-  def address(options = {})
-    { 
-      :name     => 'Jim Smith',
-      :address1 => '1234 My Street',
-      :address2 => 'Apt 1',
-      :company  => 'Widgets Inc',
-      :city     => 'Ottawa',
-      :state    => 'ON',
-      :zip      => 'K1C2N6',
-      :country  => 'CA',
-      :phone    => '(555)555-5555',
-      :fax      => '(555)555-6666'
-    }.update(options)
-  end
-
   def credit_card(number = '5123456789012346', options = {})
     defaults = {
       :number => number,
@@ -26,5 +11,9 @@ module GatewayHelpers
     }.update(options)
 
     ActiveMerchant::Billing::CreditCard.new(defaults)
+  end
+
+  def gateway(options = {})
+    ActiveMerchant::Billing::BpointGateway.new({ :login => GATEWAY_LOGIN, :password => GATEWAY_PASSWORD, :merchant_number => GATEWAY_MERCHANT_NUMBER }.merge(options))
   end
 end
