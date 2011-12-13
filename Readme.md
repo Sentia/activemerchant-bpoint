@@ -47,10 +47,19 @@ end
 As [noted in the BPOINT developer documenation in regards to testing](https://www.bpoint.com.au/backoffice/Views/Bpoint/Support/HelpGuids/TechExtracts/Testing(Phone,Internet,DDCC\).pdf) the gateway can be put into test mode by sending a month value of `99`. The initialiser for the gateway takes an optional test argument which will put it into test mode like so:
 
 ``` ruby
-gateway = ActiveMerchant::Billing::BpointGateway.new(:login => 'login', :password => 'pass', :merchant_number => 'num', :test => true)
+ActiveMerchant::Billing::BpointGateway.new(:login => 'l', :password => 'p', :merchant_number => 'n', :test => true)
 ```
 
-When the gateway is in test mode then all requests will automatically have the month set to 99 (To trigger test mode on the gateway). The year is then used to determine which response code the gateway returns. The caveat with this is that you cannot have a successful status (year 2000 or 2100) and have a valid `ActiveMerchant::Billing::CreditCard`. To get around this you can pass `:force_success => true` to the gateway to send a year of `00` and have a successful response.
+When the gateway is in test mode then all requests will automatically have the month set to 99 (which triggers test mode on the gateway). The last 2 digits of the year is then used to determine which response code the gateway returns. The caveat with this is that you cannot have a successful status (year 2000 or 2100) and have a valid `ActiveMerchant::Billing::CreditCard`. To get around this you can pass the parameter `:force_success => true` with the options to the purchase method. This will result in a successful transaction.
+
+``` ruby
+gateway = ActiveMerchant::Billing::BpointGateway.new(:login => 'l', :password => 'p', :merchant_number => 'n', :test => true)
+
+# ...
+options  = { :force_success => true, :customer_id => '9' }
+response = gateway.purchase(amount, creditcard, options)
+
+```
 
 ## License
 
