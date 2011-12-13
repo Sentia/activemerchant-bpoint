@@ -20,7 +20,6 @@ module ActiveMerchant
         post = {}
         add_invoice(post, options)
         add_creditcard(post, creditcard)
-        add_customer_data(post, options)
 
         commit('authonly', money, post)
       end
@@ -29,7 +28,6 @@ module ActiveMerchant
         post = {}
         add_invoice(post, options)
         add_creditcard(post, creditcard)
-        add_customer_data(post, options)
 
         commit('ProcessPayment', money, post)
       end
@@ -44,9 +42,6 @@ module ActiveMerchant
 
       private
 
-      def add_customer_data(post, options)
-      end
-
       def add_invoice(post, options)
         post[:MerchantReference] = options[:order_id]
       end
@@ -55,6 +50,7 @@ module ActiveMerchant
         post[:CardNumber] = creditcard.number
         post[:ExpiryDate] = "%02d%02s" % [creditcard.month, creditcard.year.to_s[-2..-1]]
         post[:CVC]        = creditcard.verification_value
+        post[:CRN1]       = [creditcard.first_name, creditcard.last_name].join(' ')
       end
 
       def parse(body)
