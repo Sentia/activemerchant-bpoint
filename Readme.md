@@ -44,7 +44,7 @@ end
 ```
 
 ## Using test mode
-As [noted in the BPOINT developer documenation in regards to testing](https://www.bpoint.com.au/backoffice/Views/Bpoint/Support/HelpGuids/TechExtracts/Testing(Phone,Internet,DDCC).pdf) the gateway can be put into test mode by sending a month value of `99`. The initialiser for the gateway takes an optional test argument which will put it into test mode like so:
+As [noted in the BPOINT developer documenation in regards to testing](https://www.bpoint.com.au/backoffice/Views/Bpoint/Support/HelpGuids/TechExtracts/Testing(Phone,Internet,DDCC\).pdf) the gateway can be put into test mode by sending a month value of `99`. The initialiser for the gateway takes an optional test argument which will put it into test mode like so:
 
 ``` ruby
 gateway = ActiveMerchant::Billing::BpointGateway.new(:login => 'login', :password => 'pass', :merchant_number => 'num', :test => true)
