@@ -21,8 +21,9 @@ Once you have an initialised gateway, there are several public methods available
 Here is an example of using the purchase method:
 
 ``` ruby
-amount = 1000 # 1000 cents is $10.00 AUD
-options = { :order_id => '5' } # Store the customers order number at the gateway
+amount     = 1000 # 1000 cents is $10.00 AUD
+options    = { :order_id => '5' } # Store the customers order number at the gateway
+
 creditcard = ActiveMerchant::Billing::CreditCard.new(
       :number => '4111111111111111',
       :month => 8,
@@ -42,12 +43,12 @@ end
 
 ## License
 
-activemerchant-bpoint is distributed under a standard MIT license, see LICENSE for further information.
+activemerchant-bpoint is distributed under a standard MIT license, see [LICENSE](https://github.com/Sentia/activemerchant-bpoint/blob/master/LICENSE) for further information.
 
 ## Contributing
 
 Fork on GitHub and after you’ve committed tested patches, send a pull request.
 
-To get tests running simply `run bundle install` and then `rspec spec`. The test suite performs some remote tests by hitting the gateway. 
+To get tests running simply `run bundle install` and then `rspec spec`.
 
-The project includes the VCR gem which prerecords responses. This means that you do not need to enter any details to perform the remote tests. If you do need to add new actions which hit the gateway, or rerecord responses, simply add your point details to the `spec/test_credentials.rb` file.
+The test suite performs some remote tests by hitting the gateway and uses the VCR gem which prerecords responses. This means that you do not need to enter any details to perform the remote tests. If you do need to add new actions which hit the gateway, or rerecord responses, simply add your point details to the `spec/test_credentials.rb` file.
