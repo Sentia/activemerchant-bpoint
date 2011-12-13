@@ -49,9 +49,13 @@ module ActiveMerchant
       end
 
       def add_invoice(post, options)
+        post[:MerchantReference] = options[:order_id]
       end
 
       def add_creditcard(post, creditcard)
+        post[:CardNumber] = creditcard.number
+        post[:ExpiryDate] = "%02d%02s" % [creditcard.month, creditcard.year.to_s[-2..-1]]
+        post[:CVC]        = creditcard.verification_value
       end
 
       def parse(body)
@@ -62,10 +66,11 @@ module ActiveMerchant
         parameters[:Amount] = amount(money)
 
         response = parse(ssl_post(LIVE_URL, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8') )
-        success  = response.elements['//ResponseCode'].try(:text) == 'SUCCESS'
-        message  = response.elements['//ResponseMessage'].text
+        success  = response.elements['//ResponseCode'].try(:text) == '0'
+        message  = response.elements['//ResponseMessage'].try(:text) || response.elements['//AuthorisationResult'].try(:text)
+        options  = { :authorization => response.elements['//AuthoriseId'].try(:text) }
 
-        result = Response.new(success, message)
+        Response.new(success, message, {}, options)
       end
 
       def post_data(action, parameters = {})
