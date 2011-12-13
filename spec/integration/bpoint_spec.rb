@@ -19,17 +19,21 @@ describe ActiveMerchant::Billing::BpointGateway do
 
   context 'making a purchase' do
     let(:gateway)             { ActiveMerchant::Billing::BpointGateway.new(:login => GATEWAY_LOGIN, :password => GATEWAY_PASSWORD, :merchant_number => GATEWAY_MERCHANT_NUMBER) }
-    let(:valid_credit_card)   { credit_card(:year => 2000) }
-    let(:invalid_credit_card) { credit_card(:year => 2010) }
+    let(:valid_credit_card)   { credit_card('5123456789012346', :year => 2000) }
+    let(:invalid_credit_card) { credit_card('5123456789012346', :year => 2010) }
 
     context 'on a valid credit card' do
-      let(:response) { gateway.purchase(1000, valid_credit_card) }
+      subject { VCR.use_cassette('valid CC purchase') { gateway.purchase(1000, valid_credit_card) } }
 
       it { should be_success }
+
+      it 'should return an authorization ID' do
+        subject.authorization.should be_present
+      end
     end
 
     context 'on an invalid credit card' do
-      let(:response) { gateway.purchase(1000, invalid_credit_card) }
+      subject { VCR.use_cassette('invalid CC purchase') { gateway.purchase(1000, invalid_credit_card) } }
 
       it { should_not be_success }
     end
