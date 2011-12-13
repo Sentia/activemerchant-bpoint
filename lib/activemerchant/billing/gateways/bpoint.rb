@@ -16,14 +16,6 @@ module ActiveMerchant
         super
       end
 
-      def authorize(money, creditcard, options = {})
-        post = {}
-        add_invoice(post, options)
-        add_creditcard(post, creditcard)
-
-        commit('authonly', money, post)
-      end
-
       def purchase(money, creditcard, options = {})
         post = {}
         add_invoice(post, options)
