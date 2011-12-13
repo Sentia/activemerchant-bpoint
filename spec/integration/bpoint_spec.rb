@@ -5,8 +5,8 @@ describe ActiveMerchant::Billing::BpointGateway do
  let(:valid_credit_card) { credit_card('todo: get card number') }
 
   context 'using invalid details' do
-    let(:gateway)  { ActiveMerchant::Billing::BpointGateway.new(:login => 'does', :password => 'not_exist', :merchant_number => '8') }
-    let(:response) { VCR.use_cassette('invalid login') { gateway.purchase(100, credit_card, {}) } }
+    let(:my_gateway) { gateway(:login => 'does', :password => 'not_exist', :merchant_number => '8') }
+    let(:response)   { VCR.use_cassette('invalid login') { my_gateway.purchase(100, credit_card, {}) } }
 
     it 'is not successful' do
       response.should_not be_success
@@ -18,8 +18,7 @@ describe ActiveMerchant::Billing::BpointGateway do
   end
 
   context 'making a purchase' do
-    let(:gateway)             { ActiveMerchant::Billing::BpointGateway.new(:login => GATEWAY_LOGIN, :password => GATEWAY_PASSWORD, :merchant_number => GATEWAY_MERCHANT_NUMBER) }
-    let(:valid_credit_card)   { credit_card('5123456789012346', :year => 2000) }
+    let(:valid_credit_card)   { credit_card('5123456789012346', :year => 2100) }
     let(:invalid_credit_card) { credit_card('5123456789012346', :year => 2010) }
 
     context 'on a valid credit card' do
