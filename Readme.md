@@ -61,6 +61,12 @@ response = gateway.purchase(amount, creditcard, options)
 
 ```
 
+Optionally you can pass the flag into the initializer for the gateway to always force success:
+
+``` ruby
+ActiveMerchant::Billing::BpointGateway.new(:login => 'l', :password => 'p', :merchant_number => 'n', :test => true, :force_success => true
+```
+
 ## License
 
 activemerchant-bpoint is distributed under a standard MIT license, see [LICENSE](https://github.com/Sentia/activemerchant-bpoint/blob/master/LICENSE) for further information.

@@ -50,7 +50,7 @@ module ActiveMerchant
       def add_creditcard(post, creditcard, options = {})
         if test?
           creditcard.month = '99'
-          creditcard.year  = '2000' if options[:force_success] == true
+          creditcard.year  = '2000' if @options[:force_success] == true || options[:force_success] == true
         end
 
         post[:CardNumber] = creditcard.number
