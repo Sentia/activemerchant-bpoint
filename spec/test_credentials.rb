@@ -3,9 +3,12 @@
 # prerecorded responses). This should only be neccessary when rerecording
 # existing actions or adding new remote tests
 #
-# This file is ignored by git so you should't be able to accidently commit the
-# API details below.
 #
+# If you want git to ignore changes to this file (so you do not accidently
+# commit your API details then simply run:
+# git update-index --assume-unchanged spec/test_credentials.rb
+#
+
 GATEWAY_LOGIN           = ''
 GATEWAY_PASSWORD        = ''
 GATEWAY_MERCHANT_NUMBER = ''
