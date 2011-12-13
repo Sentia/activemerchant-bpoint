@@ -20,7 +20,6 @@ module ActiveMerchant
         post = {}
         add_invoice(post, options)
         add_creditcard(post, creditcard)
-        add_address(post, creditcard, options)
         add_customer_data(post, options)
 
         commit('authonly', money, post)
@@ -30,7 +29,6 @@ module ActiveMerchant
         post = {}
         add_invoice(post, options)
         add_creditcard(post, creditcard)
-        add_address(post, creditcard, options)
         add_customer_data(post, options)
 
         commit('ProcessPayment', money, post)
@@ -40,12 +38,13 @@ module ActiveMerchant
         commit('capture', money, post)
       end
 
+      def test?
+        @options[:test] || super
+      end
+
       private
 
       def add_customer_data(post, options)
-      end
-
-      def add_address(post, creditcard, options)
       end
 
       def add_invoice(post, options)
@@ -72,7 +71,9 @@ module ActiveMerchant
       end
 
       def commit(action, money, parameters)
-        parameters[:Amount] = amount(money)
+        parameters[:Amount]      = amount(money)
+        parameters[:PaymentType] = 'PAYMENT'
+        parameters[:TxnType]     = 'INTERNET_ANONYMOUS'
 
         response = parse(ssl_post(LIVE_URL, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8'))
         options  = {
