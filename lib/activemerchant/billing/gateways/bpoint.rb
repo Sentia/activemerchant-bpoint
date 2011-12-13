@@ -75,7 +75,10 @@ module ActiveMerchant
         parameters[:Amount] = amount(money)
 
         response = parse(ssl_post(LIVE_URL, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8'))
-        options  = { :authorization => response[:authorise_id] }
+        options  = {
+          :test => test?,
+          :authorization => response[:authorise_id]
+        }
 
         Response.new(success_from(response), message_from(response), response, options)
       end
