@@ -17,7 +17,7 @@
       cache-control:
       - private, max-age=0
       content-length:
-      - '438'
+      - '454'
       content-type:
       - text/xml; charset=utf-8
       x-powered-by:
@@ -27,9 +27,9 @@
       server:
       - Apache2
       date:
-      - Wed, 14 Dec 2011 04:51:05 GMT
+      - Wed, 14 Dec 2011 04:51:21 GMT
     body: <?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ProcessPaymentResponse
-      xmlns="urn:Eve"><ProcessPaymentResult /><response><ResponseCode>ERROR</ResponseCode><ResponseMessage>invalid
-      login</ResponseMessage></response></ProcessPaymentResponse></soap:Body></soap:Envelope>
+      xmlns="urn:Eve"><ProcessPaymentResult /><response><ResponseCode>ERROR</ResponseCode><ResponseMessage>unable
+      to determine card type</ResponseMessage></response></ProcessPaymentResponse></soap:Body></soap:Envelope>
     http_version: '1.1'

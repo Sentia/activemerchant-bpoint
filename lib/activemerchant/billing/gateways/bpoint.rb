@@ -47,16 +47,20 @@ module ActiveMerchant
         post[:MerchantReference] = options[:order_id]
       end
 
-      def add_creditcard(post, creditcard, options = {})
+      def add_creditcard(post, creditcard_or_token, options = {})
         if test?
-          creditcard.month = '99'
-          creditcard.year  = '2000' if @options[:force_success] == true || options[:force_success] == true
+          creditcard_or_token.month = '99'
+          creditcard_or_token.year  = '2000' if @options[:force_success] == true || options[:force_success] == true
         end
 
-        post[:CardNumber] = creditcard.number
-        post[:ExpiryDate] = "%02d%02s" % [creditcard.month, creditcard.year.to_s[-2..-1]]
-        post[:CVC]        = creditcard.verification_value
-        post[:CRN1]       = [creditcard.first_name, creditcard.last_name].join(' ')
+        if creditcard_or_token.is_a?(String)
+          post[:CardNumber] = creditcard_or_token
+        else
+          post[:CardNumber] = creditcard_or_token.number
+          post[:ExpiryDate] = "%02d%02s" % [creditcard_or_token.month, creditcard_or_token.year.to_s[-2..-1]]
+          post[:CVC]        = creditcard_or_token.verification_value
+          post[:CRN1]       = [creditcard_or_token.first_name, creditcard_or_token.last_name].join(' ')
+        end
       end
 
       def parse(body)
@@ -73,9 +77,11 @@ module ActiveMerchant
       end
 
       def commit(action, money, parameters)
-        parameters[:Amount]      = amount(money) if money.present?
-        parameters[:PaymentType] = 'PAYMENT'
-        parameters[:TxnType]     = 'INTERNET_ANONYMOUS'
+        if action == 'ProcessPayment'
+          parameters[:Amount]      = amount(money)
+          parameters[:PaymentType] = 'PAYMENT'
+          parameters[:TxnType]     = 'INTERNET_ANONYMOUS'
+        end
 
         response = parse(ssl_post(LIVE_URL, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8'))
         options  = {

@@ -27,9 +27,9 @@
       server:
       - Apache2
       date:
-      - Tue, 13 Dec 2011 07:44:31 GMT
+      - Wed, 14 Dec 2011 04:51:13 GMT
     body: <?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ProcessPaymentResponse
-      xmlns="urn:Eve"><ProcessPaymentResult><ResponseCode>1</ResponseCode><AcquirerResponseCode>10</AcquirerResponseCode><AuthorisationResult>Declined</AuthorisationResult><TransactionNumber>68794893</TransactionNumber><ReceiptNumber>19363084893</ReceiptNumber><AuthoriseId
-      /><SettlementDate>20111213</SettlementDate><MaskedCardNumber>512345...346</MaskedCardNumber><CardType>MC</CardType></ProcessPaymentResult><response><ResponseCode>SUCCESS</ResponseCode></response></ProcessPaymentResponse></soap:Body></soap:Envelope>
+      xmlns="urn:Eve"><ProcessPaymentResult><ResponseCode>1</ResponseCode><AcquirerResponseCode>10</AcquirerResponseCode><AuthorisationResult>Declined</AuthorisationResult><TransactionNumber>68858229</TransactionNumber><ReceiptNumber>19386838229</ReceiptNumber><AuthoriseId
+      /><SettlementDate>20111214</SettlementDate><MaskedCardNumber>512345...346</MaskedCardNumber><CardType>MC</CardType></ProcessPaymentResult><response><ResponseCode>SUCCESS</ResponseCode></response></ProcessPaymentResponse></soap:Body></soap:Envelope>
     http_version: '1.1'
