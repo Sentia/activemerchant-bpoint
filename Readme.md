@@ -43,12 +43,11 @@ else
 end
 ```
 
-You can also store credit card numbers at the BPOINT gateway and then
-run purchase() on the token like so:
+You can also store credit card numbers at the BPOINT gateway and then pass the token to `purchase()` like so:
 
 ``` ruby
 amount     = 1000 # 1000 cents is $10.00 AUD
-options    = { :order_id => '5' } # Store the customers order number at the gateway
+tptions    = { :order_id => '5' } # Store the customers order number at the gateway
 
 creditcard = ActiveMerchant::Billing::CreditCard.new(
       :number => '4111111111111111',
