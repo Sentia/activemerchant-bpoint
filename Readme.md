@@ -43,6 +43,30 @@ else
 end
 ```
 
+You can also store credit card numbers at the BPOINT gateway and then
+run purchase() on the token like so:
+
+``` ruby
+amount     = 1000 # 1000 cents is $10.00 AUD
+options    = { :order_id => '5' } # Store the customers order number at the gateway
+
+creditcard = ActiveMerchant::Billing::CreditCard.new(
+      :number => '4111111111111111',
+      :month => 8,
+      :year => 2006,
+      :first_name => 'Longbob',
+    :last_name => 'Longsen'
+)
+
+
+token = gateway.store(credit_card).params['token']
+
+response = gateway.purchase(amount, token, options)
+
+# ...
+
+```
+
 ## Using test mode
 As [noted in the BPOINT developer documenation in regards to testing](https://www.bpoint.com.au/backoffice/Views/Bpoint/Support/HelpGuids/TechExtracts/Testing(Phone,Internet,DDCC\).pdf) the gateway can be put into test mode by sending a month value of `99`. The initialiser for the gateway takes an optional test argument which will put it into test mode like so:
 
