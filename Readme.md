@@ -1,6 +1,6 @@
 # activemerchant-bpoint
 
-ActiveMerchant Bpoint is an add-on for ActiveMerchant which provides a gateway for the Commonwealth Bank of Australia's BPOINT merchant gateway.
+ActiveMerchant Bpoint is an add-on for ActiveMerchant which provides a gateway for the Commonwealth Bank of Australia's BPOINT merchant gateway. Development on the gem has been sponsored by [Sentia Australia](http://www.sentia.com.au/).
 
 ## Installation
 Before installing the gem you should have a BPOINT account ready to use. If not then [Contact the commonwealth bank of australia for more info.](http://www.bpoint.com.au/bpoint/business/contact.html)
