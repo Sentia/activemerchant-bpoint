@@ -48,14 +48,14 @@ module ActiveMerchant
       end
 
       def add_creditcard(post, creditcard_or_token, options = {})
-        if test?
-          creditcard_or_token.month = '99'
-          creditcard_or_token.year  = '2000' if @options[:force_success] == true || options[:force_success] == true
-        end
-
         if creditcard_or_token.is_a?(String)
           post[:CardNumber] = creditcard_or_token
         else
+          if test?
+            creditcard_or_token = creditcard_or_token.dup
+            creditcard_or_token.month = '99'
+            creditcard_or_token.year  = '2000' if @options[:force_success] == true || options[:force_success] == true
+          end
           post[:CardNumber] = creditcard_or_token.number
           post[:ExpiryDate] = "%02d%02s" % [creditcard_or_token.month, creditcard_or_token.year.to_s[-2..-1]]
           post[:CVC]        = creditcard_or_token.verification_value
