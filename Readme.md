@@ -100,4 +100,4 @@ Fork on GitHub and after you’ve committed tested patches, send a pull request.
 
 To get tests running simply `run bundle install` and then `rspec spec`.
 
-The test suite performs some remote tests by hitting the gateway and uses the VCR gem which prerecords responses. This means that you do not need to enter any details to perform the remote tests. If you do need to add new actions which hit the gateway, or rerecord responses, simply add your point details to the `spec/test_credentials.rb` file.
+The test suite performs some remote tests by hitting the gateway and uses the VCR gem which prerecords responses. This means that you do not need to enter any details to perform the remote tests. If you do need to add new actions which hit the gateway, or rerecord responses, simply add your BPOINT details to the `spec/test_credentials.rb` file.
