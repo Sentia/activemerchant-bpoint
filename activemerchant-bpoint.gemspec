@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["mario@mariovisic.com"]
   s.homepage    = ""
   s.summary     = 'ActiveMerchant BPOINT Plugin'
-  s.description = 'An ActiveMerchant plugin that provides a full featured BPOINT gateway'
+  s.description = 'An ActiveMerchant plugin that provides a full featured BPOINT gateway. Development sponsored by Sentia Australia.'
 
   s.rubyforge_project = "activemerchant-bpoint"
 
