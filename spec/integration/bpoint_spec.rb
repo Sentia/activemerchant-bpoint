@@ -38,7 +38,7 @@ describe ActiveMerchant::Billing::BpointGateway do
   end
 
   context 'making a purchase with a stored credit card' do
-    let!(:token)  { VCR.use_cassette('store valid CC') { gateway.store(success_credit_card).params['token'] } }
+    let!(:token)  { VCR.use_cassette('store valid CC') { gateway.store(success_credit_card).params['billingid'] } }
 
     context 'with a valid token' do
       subject { VCR.use_cassette('valid token purchase') { gateway.purchase(1000, token, options) } }
@@ -65,7 +65,7 @@ describe ActiveMerchant::Billing::BpointGateway do
       it { should be_success }
 
       it 'should return a token' do
-        subject.params['token'].should be_present
+        subject.params['billingid'].should be_present
       end
     end
 
@@ -77,7 +77,7 @@ describe ActiveMerchant::Billing::BpointGateway do
   end
 
   context 'removing a credit card from storage' do
-    let!(:token)  { VCR.use_cassette('store valid CC') { gateway.store(success_credit_card).params['token'] } }
+    let!(:token)  { VCR.use_cassette('store valid CC') { gateway.store(success_credit_card).params['billingid'] } }
 
     context 'when given a valid token' do
       subject { VCR.use_cassette('unstore valid token') { gateway.unstore(token) } }

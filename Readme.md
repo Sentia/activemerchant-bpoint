@@ -58,7 +58,7 @@ creditcard = ActiveMerchant::Billing::CreditCard.new(
 )
 
 
-token = gateway.store(credit_card).params['token']
+token = gateway.store(credit_card).params['billingid']
 
 response = gateway.purchase(amount, token, options)
 
