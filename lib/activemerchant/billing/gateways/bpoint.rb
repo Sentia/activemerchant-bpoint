@@ -71,7 +71,10 @@ module ActiveMerchant
       end
 
       def parse_element(response, node)
-        return response[node.name.underscore.to_sym] = node.text unless node.has_elements?
+        unless node.has_elements?
+          return response[:billingid] = node.text if node.name == 'Token'
+          return response[node.name.underscore.to_sym] = node.text
+        end
 
         node.elements.each{|element| parse_element(response, element) }
       end
