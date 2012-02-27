@@ -3,7 +3,7 @@ module ActiveMerchant
     class BpointGateway < Gateway
       LIVE_URL = 'https://www.bpoint.com.au/evolve/service.asmx'
 
-      self.supported_cardtypes = [:visa, :master, :american_express, :discover]
+      self.supported_cardtypes = [:visa, :master]
       self.supported_countries = ['AU']
       self.homepage_url        = 'http://www.bpoint.com.au'
       self.display_name        = 'BPOINT'
