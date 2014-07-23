@@ -6,6 +6,9 @@ require 'test_credentials'
 
 RSpec.configure do |config|
   config.include GatewayHelpers
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
 end
 
 VCR.config do |c|
