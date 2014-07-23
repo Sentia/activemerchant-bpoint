@@ -46,7 +46,7 @@ Here is an example of using the refund method:
 
 ``` ruby
 amount     = 1000 # 1000 cents is $10.00 AUD
-original_transaction_number = 168991245 # this is the value returned in the transaction field of the purchase.
+original_transaction_number = 168991245 # this is the value returned in the TransactionNumber field of the purchase.
 
 response = gateway.refund(amount, original_transaction_number)
 
