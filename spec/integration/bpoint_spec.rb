@@ -37,6 +37,24 @@ describe ActiveMerchant::Billing::BpointGateway do
     end
   end
 
+  context 'making a refund' do
+    context 'after a valid purchas' do
+      let(:original) { VCR.use_cassette('valid CC purchase') { gateway.purchase(1000, success_credit_card, options) } }
+      it 'should be successful' do
+        response = VCR.use_cassette('valid CC refund') { gateway.refund(1000, original.params["transaction_number"]) }
+        response.should be_success
+      end
+      it 'should return an authorization ID' do
+        response = VCR.use_cassette('valid CC refund') { gateway.refund(1000, original.params["transaction_number"]) }
+        response.authorization.should be_present
+      end
+      it 'should be rejected if invalid transaction number' do
+        response = VCR.use_cassette('invalid CC refund bad transaction') { gateway.refund(1000, '1234') }
+        response.params['authorisation_result'].should eq 'Original transaction not found'
+      end
+    end
+  end
+
   context 'making a purchase with a stored credit card' do
     let!(:token)  { VCR.use_cassette('store valid CC') { gateway.store(success_credit_card).params['billingid'] } }
 

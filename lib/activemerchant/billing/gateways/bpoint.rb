@@ -24,6 +24,14 @@ module ActiveMerchant
         commit('ProcessPayment', money, post)
       end
 
+      def refund(money, original_transaction_number)
+        post = {}
+        post[:OriginalTransactionNumber] = original_transaction_number
+        post[:PaymentType] = 'REFUND'
+
+        commit('ProcessPayment', money, post)
+      end
+
       def store(credit_card, options = {})
         post = {}
         add_creditcard(post, credit_card, options)
@@ -82,7 +90,7 @@ module ActiveMerchant
       def commit(action, money, parameters)
         if action == 'ProcessPayment'
           parameters[:Amount]      = amount(money)
-          parameters[:PaymentType] = 'PAYMENT'
+          parameters[:PaymentType] ||= 'PAYMENT'
           parameters[:TxnType]     = 'INTERNET_ANONYMOUS'
         end
 
