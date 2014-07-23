@@ -42,6 +42,20 @@ else
   puts response.message # Output the error message
 end
 ```
+Here is an example of using the refund method:
+
+``` ruby
+amount     = 1000 # 1000 cents is $10.00 AUD
+original_transaction_number = 168991245 # this is the value returned in the transaction field of the purchase.
+
+response = gateway.refund(amount, original_transaction_number)
+
+if response.sucess?
+  puts "All OK!"
+else
+  puts response.message # Output the error message
+end
+```
 
 You can also store credit card numbers at the BPOINT gateway and then pass the token to `purchase()` like so:
 
