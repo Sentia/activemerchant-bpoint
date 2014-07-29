@@ -104,7 +104,7 @@ Optionally you can pass the flag into the initializer for the gateway to always 
 ActiveMerchant::Billing::BpointGateway.new(:login => 'l', :password => 'p', :merchant_number => 'n', :test => true, :force_success => true
 ```
 
-#Targeting UAT
+### Targeting UAT
 Edit the file test_credentials.rb, by uncommenting the code below
 ``` ruby
 # class ActiveMerchant::Billing::BpointGateway
