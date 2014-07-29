@@ -24,6 +24,15 @@ module ActiveMerchant
         commit('ProcessPayment', money, post)
       end
 
+      def pre_auth(money, creditcard, options = {})
+        post = {}
+        post[:PaymentType] = 'PREAUTH'
+        add_invoice(post, options)
+        add_creditcard(post, creditcard, options)
+
+        commit('ProcessPayment', money, post)
+      end
+
       def refund(money, original_transaction_number)
         post = {}
         post[:OriginalTransactionNumber] = original_transaction_number
