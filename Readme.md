@@ -16,6 +16,16 @@ The gateway can be initialised by passing your login details like so:
 ``` ruby
 gateway = ActiveMerchant::Billing::BpointGateway.new(:login => 'login', :password => 'pass', :merchant_number => 'num')
 ```
+## Testing
+Edit the file test_credentials.rb 
+If you wish to target the UAT site (as I did) then past this code in that file.
+``` ruby
+class ActiveMerchant::Billing::BpointGateway
+  LIVE_URL = 'https://bpoint-uat.premier.com.au/evolve/service.asmx'
+  self.homepage_url = 'http://bpoint-uat.premier.com.au'
+end
+```
+You can also put this code in your rails app inside an if Rails.env.development? block
 
 ## Usage
 Once you have an initialised gateway, there are several public methods available including `purchase`, `store` and `unstore`.
