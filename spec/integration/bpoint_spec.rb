@@ -37,6 +37,24 @@ describe ActiveMerchant::Billing::BpointGateway do
     end
   end
 
+  context 'making a pre_auth purchase' do
+    context 'on a valid credit card' do
+      subject { VCR.use_cassette('valid CC pre-auth') { gateway.pre_auth(1000, success_credit_card, options) } }
+
+      it { should be_success }
+
+      it 'should return an authorization ID' do
+        subject.authorization.should be_present
+      end
+    end
+
+    context 'on an invalid credit card' do
+      subject { VCR.use_cassette('invalid CC pre-auth') { gateway.pre_auth(1000, fail_credit_card, options) } }
+
+      it { should_not be_success }
+    end
+  end
+
   context 'making a refund' do
     context 'after a valid purchas' do
       let(:original) { VCR.use_cassette('valid CC purchase') { gateway.purchase(1000, success_credit_card, options) } }
