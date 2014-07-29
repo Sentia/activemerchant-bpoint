@@ -9,6 +9,12 @@
 # git update-index --assume-unchanged spec/test_credentials.rb
 #
 
+# UNCOMMENT THE FOLLOWING CODE  if you wish to target UAT
+# class ActiveMerchant::Billing::BpointGateway
+#   LIVE_URL = 'https://bpoint-uat.premier.com.au/evolve/service.asmx'
+#   self.homepage_url = 'http://bpoint-uat.premier.com.au'
+# end
+
 GATEWAY_LOGIN           = ''
 GATEWAY_PASSWORD        = ''
 GATEWAY_MERCHANT_NUMBER = ''
