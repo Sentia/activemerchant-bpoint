@@ -25,12 +25,12 @@
       server:
       - Microsoft-IIS/7.5
       date:
-      - Wed, 30 Jul 2014 01:58:15 GMT
+      - Wed, 30 Jul 2014 02:11:35 GMT
       content-length:
       - '621'
     body: <?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ProcessPaymentResponse
       xmlns="urn:Eve"><ProcessPaymentResult><ResponseCode>PT_R1</ResponseCode><AuthorisationResult>Original
-      transaction not found</AuthorisationResult><TransactionNumber>45818900</TransactionNumber><ReceiptNumber>45683388900</ReceiptNumber><CardType
+      transaction not found</AuthorisationResult><TransactionNumber>45818918</TransactionNumber><ReceiptNumber>45683638918</ReceiptNumber><CardType
       /></ProcessPaymentResult><response><ResponseCode>SUCCESS</ResponseCode></response></ProcessPaymentResponse></soap:Body></soap:Envelope>
     http_version: '1.1'
