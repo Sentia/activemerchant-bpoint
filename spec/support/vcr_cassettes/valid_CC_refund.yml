@@ -8,7 +8,7 @@
       content-type:
       - text/xml;charset=UTF-8
       soapaction:
-      - urn:Eve/DeleteToken
+      - urn:Eve/ProcessPayment
       accept-encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
   response: !ruby/struct:VCR::Response
@@ -25,10 +25,10 @@
       server:
       - Microsoft-IIS/7.5
       date:
-      - Wed, 30 Jul 2014 01:58:21 GMT
+      - Wed, 30 Jul 2014 01:58:15 GMT
       content-length:
-      - '362'
+      - '782'
     body: <?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><DeleteTokenResponse
-      xmlns="urn:Eve"><response><ResponseCode>SUCCESS</ResponseCode></response></DeleteTokenResponse></soap:Body></soap:Envelope>
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ProcessPaymentResponse
+      xmlns="urn:Eve"><ProcessPaymentResult><ResponseCode>0</ResponseCode><AcquirerResponseCode>00</AcquirerResponseCode><AuthorisationResult>Approved</AuthorisationResult><TransactionNumber>45818899</TransactionNumber><ReceiptNumber>45683388899</ReceiptNumber><AuthoriseId>301153586256</AuthoriseId><SettlementDate>20140730</SettlementDate><MaskedCardNumber>512345...346</MaskedCardNumber><CardType>MC</CardType></ProcessPaymentResult><response><ResponseCode>SUCCESS</ResponseCode></response></ProcessPaymentResponse></soap:Body></soap:Envelope>
     http_version: '1.1'

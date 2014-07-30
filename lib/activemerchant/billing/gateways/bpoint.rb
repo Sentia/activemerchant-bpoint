@@ -1,7 +1,7 @@
 module ActiveMerchant
   module Billing
     class BpointGateway < Gateway
-      LIVE_URL = 'https://www.bpoint.com.au/evolve/service.asmx'
+      DEFAULT_LIVE_URL = 'https://www.bpoint.com.au/evolve/service.asmx'
 
       self.supported_cardtypes = [:visa, :master]
       self.supported_countries = ['AU']
@@ -13,6 +13,7 @@ module ActiveMerchant
       def initialize(options = {})
         requires!(options, :login, :password, :merchant_number)
         @options = options
+        @service_endpoint = options[:endpoint] || DEFAULT_LIVE_URL
         super
       end
 
@@ -103,7 +104,7 @@ module ActiveMerchant
           parameters[:TxnType]     = 'INTERNET_ANONYMOUS'
         end
 
-        response = parse(ssl_post(LIVE_URL, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8'))
+        response = parse(ssl_post(@service_endpoint, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8'))
         options  = {
           :test => test?,
           :authorization => response[:authorise_id]

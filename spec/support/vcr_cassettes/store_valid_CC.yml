@@ -2,33 +2,33 @@
 - !ruby/struct:VCR::HTTPInteraction
   request: !ruby/struct:VCR::Request
     method: :post
-    uri: https://www.bpoint.com.au:443/evolve/service.asmx
+    uri: https://bpoint-uat.premier.com.au:443/evolve/service.asmx
     body: 
     headers:
       content-type:
       - text/xml;charset=UTF-8
       soapaction:
       - urn:Eve/AddToken
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
   response: !ruby/struct:VCR::Response
     status: !ruby/struct:VCR::ResponseStatus
       code: 200
       message: OK
     headers:
       cache-control:
-      - private, max-age=0
-      content-length:
-      - '492'
+      - private, max-age=0,no-store,no-cache,must-revalidate,proxy-revalidate
+      pragma:
+      - no-cache
       content-type:
       - text/xml; charset=utf-8
-      x-powered-by:
-      - ASP.NET
-      x-aspnet-version:
-      - 2.0.50727
       server:
-      - Apache2
+      - Microsoft-IIS/7.5
       date:
-      - Wed, 14 Dec 2011 04:51:16 GMT
+      - Wed, 30 Jul 2014 01:58:16 GMT
+      content-length:
+      - '492'
     body: <?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><AddTokenResponse
-      xmlns="urn:Eve"><AddTokenResult><Token>5999991331436461</Token><MaskedCardNumber>512345...346</MaskedCardNumber><CardType>MC</CardType></AddTokenResult><response><ResponseCode>SUCCESS</ResponseCode></response></AddTokenResponse></soap:Body></soap:Envelope>
+      xmlns="urn:Eve"><AddTokenResult><Token>5999991534771060</Token><MaskedCardNumber>512345...346</MaskedCardNumber><CardType>MC</CardType></AddTokenResult><response><ResponseCode>SUCCESS</ResponseCode></response></AddTokenResponse></soap:Body></soap:Envelope>
     http_version: '1.1'
