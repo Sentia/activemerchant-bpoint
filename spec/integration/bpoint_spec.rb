@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe ActiveMerchant::Billing::BpointGateway do
   let(:options)             { { :order_id => '1', :description => 'Store Purchase' } }
-  let(:success_credit_card) { credit_card('5123456789012346', :year => 2100) }
-  let(:fail_credit_card)    { credit_card('5123456789012346', :year => 2010) }
+  let(:success_credit_card) { credit_card('5123 4567 8901 2346', :year => 2100) }
+  let(:fail_credit_card)    { credit_card('5123 4567 8901 2346', :year => 2010) }
   let(:invalid_credit_card) { credit_card('', :year => 2010) }
 
   context 'using invalid details' do
@@ -52,6 +52,14 @@ describe ActiveMerchant::Billing::BpointGateway do
       subject { VCR.use_cassette('invalid CC pre-auth') { gateway.pre_auth(1000, fail_credit_card, options) } }
 
       it { should_not be_success }
+    end
+
+    context 'on an invalid credit card' do
+      subject { VCR.use_cassette('invalid CC pre-auth bad_price') { gateway.pre_auth(-1000, success_credit_card, options) } }
+
+      it 'should not return an authorization ID' do
+        subject.authorization.should be_nil
+      end
     end
   end
 

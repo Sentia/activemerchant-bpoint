@@ -1,5 +1,5 @@
 module GatewayHelpers
-  def credit_card(number = '5123456789012346', options = {})
+  def credit_card(number = '5123 4567 8901 2346', options = {})
     defaults = {
       :number => number,
       :month => 99,  # We need to use 99 to trigger 'Test' mode for the gatewqy

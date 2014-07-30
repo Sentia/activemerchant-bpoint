@@ -74,7 +74,7 @@ module ActiveMerchant
             creditcard_or_token.month = '99'
             creditcard_or_token.year  = '2000' if @options[:force_success] == true || options[:force_success] == true
           end
-          post[:CardNumber] = creditcard_or_token.number
+          post[:CardNumber] = creditcard_or_token.number.gsub(/\D/, '')
           post[:ExpiryDate] = "%02d%02s" % [creditcard_or_token.month, creditcard_or_token.year.to_s[-2..-1]]
           post[:CVC]        = creditcard_or_token.verification_value
           post[:CRN1]       = [creditcard_or_token.first_name, creditcard_or_token.last_name].join(' ')
@@ -109,7 +109,6 @@ module ActiveMerchant
           :test => test?,
           :authorization => response[:authorise_id]
         }
-
         Response.new(success_from(response), message_from(response), response, options)
       end
 
