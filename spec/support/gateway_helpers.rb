@@ -14,6 +14,6 @@ module GatewayHelpers
   end
 
   def gateway(options = {})
-    ActiveMerchant::Billing::BpointGateway.new({ :login => GATEWAY_LOGIN, :password => GATEWAY_PASSWORD, :merchant_number => GATEWAY_MERCHANT_NUMBER }.merge(options))
+    ActiveMerchant::Billing::BpointGateway.new({ :endpoint => GATEWAY_ENDPOINT, :login => GATEWAY_LOGIN, :password => GATEWAY_PASSWORD, :merchant_number => GATEWAY_MERCHANT_NUMBER }.merge(options))
   end
 end
