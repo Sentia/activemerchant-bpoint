@@ -1,34 +1,49 @@
 ---
-- !ruby/struct:VCR::HTTPInteraction
-  request: !ruby/struct:VCR::Request
-    method: :post
-    uri: https://www.bpoint.com.au:443/evolve/service.asmx
-    body: 
+http_interactions:
+- request:
+    method: post
+    uri: https://bpoint-uat.premier.com.au/evolve/service.asmx
+    body:
+      encoding: UTF-8
+      string: "<?xml version='1.0' encoding='UTF-8'?><env:Envelope xmlns:env='http://schemas.xmlsoap.org/soap/envelope/'
+        xmlns:ns0='urn:Eve' xmlns:wsdl='urn:Eve' xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'><env:Body><ns0:ProcessPayment><ns0:txnReq><ns0:MerchantReference>1</ns0:MerchantReference><ns0:CardNumber>5123456789012346</ns0:CardNumber><ns0:ExpiryDate>9900</ns0:ExpiryDate><ns0:CVC>123</ns0:CVC><ns0:CRN1>Longbob
+        Longsen</ns0:CRN1><ns0:Amount>1000</ns0:Amount><ns0:PaymentType>PAYMENT</ns0:PaymentType><ns0:TxnType>INTERNET_ANONYMOUS</ns0:TxnType></ns0:txnReq><ns0:username>airtasker</ns0:username><ns0:password>Pm0o4F4Xf0</ns0:password><ns0:merchantNumber>5353109290371138</ns0:merchantNumber></ns0:ProcessPayment></env:Body></env:Envelope>"
     headers:
       content-type:
       - text/xml;charset=UTF-8
       soapaction:
       - urn:Eve/ProcessPayment
-  response: !ruby/struct:VCR::Response
-    status: !ruby/struct:VCR::ResponseStatus
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+  response:
+    status:
       code: 200
       message: OK
     headers:
       cache-control:
-      - private, max-age=0
-      content-length:
-      - '782'
+      - private, max-age=0,no-store,no-cache,must-revalidate,proxy-revalidate
+      pragma:
+      - no-cache
       content-type:
       - text/xml; charset=utf-8
-      x-powered-by:
-      - ASP.NET
-      x-aspnet-version:
-      - 2.0.50727
       server:
-      - Apache2
+      - Microsoft-IIS/7.5
       date:
-      - Wed, 14 Dec 2011 04:51:09 GMT
-    body: <?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ProcessPaymentResponse
-      xmlns="urn:Eve"><ProcessPaymentResult><ResponseCode>0</ResponseCode><AcquirerResponseCode>00</AcquirerResponseCode><AuthorisationResult>Approved</AuthorisationResult><TransactionNumber>68858204</TransactionNumber><ReceiptNumber>19386838204</ReceiptNumber><AuthoriseId>141551075643</AuthoriseId><SettlementDate>20111214</SettlementDate><MaskedCardNumber>512345...346</MaskedCardNumber><CardType>MC</CardType></ProcessPaymentResult><response><ResponseCode>SUCCESS</ResponseCode></response></ProcessPaymentResponse></soap:Body></soap:Envelope>
+      - Wed, 06 Aug 2014 04:40:18 GMT
+      connection:
+      - close
+      content-length:
+      - '782'
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ProcessPaymentResponse
+        xmlns="urn:Eve"><ProcessPaymentResult><ResponseCode>0</ResponseCode><AcquirerResponseCode>00</AcquirerResponseCode><AuthorisationResult>Approved</AuthorisationResult><TransactionNumber>45906848</TransactionNumber><ReceiptNumber>45875406848</ReceiptNumber><AuthoriseId>061435112487</AuthoriseId><SettlementDate>20140806</SettlementDate><MaskedCardNumber>512345...346</MaskedCardNumber><CardType>MC</CardType></ProcessPaymentResult><response><ResponseCode>SUCCESS</ResponseCode></response></ProcessPaymentResponse></soap:Body></soap:Envelope>
     http_version: '1.1'
+  recorded_at: Wed, 06 Aug 2014 04:35:14 GMT
+recorded_with: VCR 2.9.2

@@ -42,6 +42,20 @@ else
   puts response.message # Output the error message
 end
 ```
+Here is an example of using the refund method:
+
+``` ruby
+amount     = 1000 # 1000 cents is $10.00 AUD
+original_transaction_number = 168991245 # this is the value returned in the TransactionNumber field of the purchase.
+
+response = gateway.refund(amount, original_transaction_number)
+
+if response.sucess?
+  puts "All OK!"
+else
+  puts response.message # Output the error message
+end
+```
 
 You can also store credit card numbers at the BPOINT gateway and then pass the token to `purchase()` like so:
 
@@ -89,6 +103,17 @@ Optionally you can pass the flag into the initializer for the gateway to always 
 ``` ruby
 ActiveMerchant::Billing::BpointGateway.new(:login => 'l', :password => 'p', :merchant_number => 'n', :test => true, :force_success => true
 ```
+
+### Targeting UAT
+Edit the file test_credentials.rb, by uncommenting the code below
+``` ruby
+# class ActiveMerchant::Billing::BpointGateway
+#   LIVE_URL = 'https://bpoint-uat.premier.com.au/evolve/service.asmx'
+#   self.homepage_url = 'http://bpoint-uat.premier.com.au'
+# end
+```
+You can also put this code in your rails app inside an if Rails.env.development? block
+
 
 ## License
 

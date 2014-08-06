@@ -6,9 +6,12 @@ require 'test_credentials'
 
 RSpec.configure do |config|
   config.include GatewayHelpers
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
 end
 
-VCR.config do |c|
+VCR.configure do |c|
   c.cassette_library_dir = File.dirname(__FILE__) + '/support/vcr_cassettes'
-  c.stub_with :fakeweb
+  c.hook_into :fakeweb
 end

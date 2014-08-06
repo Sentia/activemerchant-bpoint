@@ -1,7 +1,7 @@
 module ActiveMerchant
   module Billing
     class BpointGateway < Gateway
-      LIVE_URL = 'https://www.bpoint.com.au/evolve/service.asmx'
+      DEFAULT_LIVE_URL = 'https://www.bpoint.com.au/evolve/service.asmx'
 
       self.supported_cardtypes = [:visa, :master]
       self.supported_countries = ['AU']
@@ -13,6 +13,7 @@ module ActiveMerchant
       def initialize(options = {})
         requires!(options, :login, :password, :merchant_number)
         @options = options
+        @service_endpoint = options[:endpoint] || DEFAULT_LIVE_URL
         super
       end
 
@@ -20,6 +21,23 @@ module ActiveMerchant
         post = {}
         add_invoice(post, options)
         add_creditcard(post, creditcard, options)
+
+        commit('ProcessPayment', money, post)
+      end
+
+      def pre_auth(money, creditcard, options = {})
+        post = {}
+        post[:PaymentType] = 'PREAUTH'
+        add_invoice(post, options)
+        add_creditcard(post, creditcard, options)
+
+        commit('ProcessPayment', money, post)
+      end
+
+      def refund(money, reference, options = {})
+        post = {}
+        post[:OriginalTransactionNumber] = reference
+        post[:PaymentType] = 'REFUND'
 
         commit('ProcessPayment', money, post)
       end
@@ -56,7 +74,7 @@ module ActiveMerchant
             creditcard_or_token.month = '99'
             creditcard_or_token.year  = '2000' if @options[:force_success] == true || options[:force_success] == true
           end
-          post[:CardNumber] = creditcard_or_token.number
+          post[:CardNumber] = creditcard_or_token.number.gsub(/\D/, '')
           post[:ExpiryDate] = "%02d%02s" % [creditcard_or_token.month, creditcard_or_token.year.to_s[-2..-1]]
           post[:CVC]        = creditcard_or_token.verification_value
           post[:CRN1]       = [creditcard_or_token.first_name, creditcard_or_token.last_name].join(' ')
@@ -82,16 +100,15 @@ module ActiveMerchant
       def commit(action, money, parameters)
         if action == 'ProcessPayment'
           parameters[:Amount]      = amount(money)
-          parameters[:PaymentType] = 'PAYMENT'
+          parameters[:PaymentType] ||= 'PAYMENT'
           parameters[:TxnType]     = 'INTERNET_ANONYMOUS'
         end
 
-        response = parse(ssl_post(LIVE_URL, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8'))
+        response = parse(ssl_post(@service_endpoint, post_data(action, parameters), 'SOAPAction' => "urn:Eve/#{action}", 'Content-Type' => 'text/xml;charset=UTF-8'))
         options  = {
           :test => test?,
           :authorization => response[:authorise_id]
         }
-
         Response.new(success_from(response), message_from(response), response, options)
       end
 

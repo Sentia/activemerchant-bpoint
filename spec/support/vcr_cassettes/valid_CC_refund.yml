@@ -7,8 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: "<?xml version='1.0' encoding='UTF-8'?><env:Envelope xmlns:env='http://schemas.xmlsoap.org/soap/envelope/'
         xmlns:ns0='urn:Eve' xmlns:wsdl='urn:Eve' xmlns:xsd='http://www.w3.org/2001/XMLSchema'
-        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'><env:Body><ns0:ProcessPayment><ns0:txnReq><ns0:MerchantReference>1</ns0:MerchantReference><ns0:CardNumber>5123456789012346</ns0:CardNumber><ns0:ExpiryDate>9910</ns0:ExpiryDate><ns0:CVC>123</ns0:CVC><ns0:CRN1>Longbob
-        Longsen</ns0:CRN1><ns0:Amount>1000</ns0:Amount><ns0:PaymentType>PAYMENT</ns0:PaymentType><ns0:TxnType>INTERNET_ANONYMOUS</ns0:TxnType></ns0:txnReq><ns0:username>airtasker</ns0:username><ns0:password>Pm0o4F4Xf0</ns0:password><ns0:merchantNumber>5353109290371138</ns0:merchantNumber></ns0:ProcessPayment></env:Body></env:Envelope>"
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'><env:Body><ns0:ProcessPayment><ns0:txnReq><ns0:OriginalTransactionNumber>45906848</ns0:OriginalTransactionNumber><ns0:PaymentType>REFUND</ns0:PaymentType><ns0:Amount>1000</ns0:Amount><ns0:TxnType>INTERNET_ANONYMOUS</ns0:TxnType></ns0:txnReq><ns0:username>airtasker</ns0:username><ns0:password>Pm0o4F4Xf0</ns0:password><ns0:merchantNumber>5353109290371138</ns0:merchantNumber></ns0:ProcessPayment></env:Body></env:Envelope>"
     headers:
       content-type:
       - text/xml;charset=UTF-8
@@ -34,17 +33,16 @@ http_interactions:
       server:
       - Microsoft-IIS/7.5
       date:
-      - Wed, 06 Aug 2014 04:40:21 GMT
+      - Wed, 06 Aug 2014 04:40:31 GMT
       connection:
       - close
       content-length:
-      - '758'
+      - '782'
     body:
       encoding: UTF-8
       string: <?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ProcessPaymentResponse
-        xmlns="urn:Eve"><ProcessPaymentResult><ResponseCode>1</ResponseCode><AcquirerResponseCode>10</AcquirerResponseCode><AuthorisationResult>Declined</AuthorisationResult><TransactionNumber>45906849</TransactionNumber><ReceiptNumber>45875416849</ReceiptNumber><AuthoriseId
-        /><SettlementDate>20140806</SettlementDate><MaskedCardNumber>512345...346</MaskedCardNumber><CardType>MC</CardType></ProcessPaymentResult><response><ResponseCode>SUCCESS</ResponseCode></response></ProcessPaymentResponse></soap:Body></soap:Envelope>
+        xmlns="urn:Eve"><ProcessPaymentResult><ResponseCode>0</ResponseCode><AcquirerResponseCode>00</AcquirerResponseCode><AuthorisationResult>Approved</AuthorisationResult><TransactionNumber>45906853</TransactionNumber><ReceiptNumber>45875416853</ReceiptNumber><AuthoriseId>061435244624</AuthoriseId><SettlementDate>20140806</SettlementDate><MaskedCardNumber>512345...346</MaskedCardNumber><CardType>MC</CardType></ProcessPaymentResult><response><ResponseCode>SUCCESS</ResponseCode></response></ProcessPaymentResponse></soap:Body></soap:Envelope>
     http_version: '1.1'
-  recorded_at: Wed, 06 Aug 2014 04:35:17 GMT
+  recorded_at: Wed, 06 Aug 2014 04:35:26 GMT
 recorded_with: VCR 2.9.2
