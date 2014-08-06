@@ -72,7 +72,7 @@ describe ActiveMerchant::Billing::BpointGateway do
       end
       it 'should return an authorization ID' do
         response = VCR.use_cassette('valid CC refund') { gateway.refund(1000, original.params["transaction_number"]) }
-        response.authorization.should be_present
+        response.authorization.should_not be_nil
       end
       it 'should be rejected if invalid transaction number' do
         response = VCR.use_cassette('invalid CC refund bad transaction') { gateway.refund(1000, '1234') }
