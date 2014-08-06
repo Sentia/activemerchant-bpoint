@@ -10,7 +10,7 @@
 #
 
 # UNCOMMENT THE FOLLOWING CODE  if you wish to target UAT
-# GATEWAY_ENDPOINT = 'https://bpoint-uat.premier.com.au/evolve/service.asmx'
-GATEWAY_LOGIN           = ''
-GATEWAY_PASSWORD        = ''
-GATEWAY_MERCHANT_NUMBER = ''
+GATEWAY_ENDPOINT = 'https://bpoint-uat.premier.com.au/evolve/service.asmx'
+GATEWAY_LOGIN           = 'airtasker'
+GATEWAY_PASSWORD        = 'Pm0o4F4Xf0'
+GATEWAY_MERCHANT_NUMBER = '5353109290371138'

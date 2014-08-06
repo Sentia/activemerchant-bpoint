@@ -34,9 +34,9 @@ module ActiveMerchant
         commit('ProcessPayment', money, post)
       end
 
-      def refund(money, original_transaction_number)
+      def refund(money, reference, options = {})
         post = {}
-        post[:OriginalTransactionNumber] = original_transaction_number
+        post[:OriginalTransactionNumber] = reference
         post[:PaymentType] = 'REFUND'
 
         commit('ProcessPayment', money, post)

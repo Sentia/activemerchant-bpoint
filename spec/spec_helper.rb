@@ -11,7 +11,7 @@ RSpec.configure do |config|
   end
 end
 
-VCR.config do |c|
+VCR.configure do |c|
   c.cassette_library_dir = File.dirname(__FILE__) + '/support/vcr_cassettes'
-  c.stub_with :fakeweb
+  c.hook_into :fakeweb
 end
