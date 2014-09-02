@@ -17,14 +17,13 @@ module ActiveMerchant #:nodoc:
 
        def refund(money, reference, options = {})
         money = amount(money)
-        
         case reference
         when /1$/
           raise Error, REFUND_ERROR_MESSAGE
         when /2$/
-          Response.new(false, FAILURE_MESSAGE, {:paid_amount => money, :error => FAILURE_MESSAGE }, :test => true)
+          Response.new(false, FAILURE_MESSAGE, {:paid_amount => money, :error => FAILURE_MESSAGE, authorisation_result: 'FAILED' }, :test => true)
         else
-          Response.new(true, SUCCESS_MESSAGE, {:paid_amount => money, :receipt_number => '1234'}, :test => true, :authorization => AUTHORIZATION)
+          Response.new(true, SUCCESS_MESSAGE, {:paid_amount => money, :receipt_number => '1234', authorisation_result: 'Approved'}, :test => true, :authorization => AUTHORIZATION)
         end
       end
     end
